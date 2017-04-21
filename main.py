@@ -53,7 +53,21 @@ class MainPage(Handler):
         self.render("front.html", title=title, art=art, error=error, arts=arts)
 
     def get(self):
-        self.render_front()
+        # self.render_front()
+        self.response.headers['Content-Type'] = 'text/plain'
+        visits = self.request.cookies.get('visits', '0')
+        # Make sure visits in an int
+        if visits.isdigit():
+            visits = int(visits) + 1
+        else:
+            visits = 0
+
+        self.response.headers.add_header('Set-Cookie', 'visits=%s' % visits)
+
+        if visits > 10:
+            self.write("You da best !")
+        else:
+            self.write("You've been here %s times!" % visits)
 
     def post(self):
         title = self.request.get("title")
