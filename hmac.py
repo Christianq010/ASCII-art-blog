@@ -3,7 +3,7 @@ import hmac
 # Implement the hash_str function to use HMAC and our SECRET instead of md5
 SECRET = 'imsosecret'
 def hash_str(s):
-    return hmac.new("SECRET", s).hexdigest()
+    return hmac.new(SECRET, s).hexdigest()
 
 def make_secure_val(s):
     return "%s|%s" % (s, hash_str(s))

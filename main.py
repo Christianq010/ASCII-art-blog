@@ -19,6 +19,10 @@ import os
 import webapp2
 import jinja2
 import hashlib
+import hmac
+
+# Secret for hmac Hashing
+secret = 'imsosecret'
 
 from google.appengine.ext import db
 
@@ -27,11 +31,12 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader= jinja2.FileSystemLoader(template_dir),
                                autoescape=True)
 
-# Functions below from Hashing Cookies
+
+# Functions below from HMAC Hashing for our Cookie Count
 
 
 def hash_str(s):
-    return hashlib.md5(s).hexdigest()
+    return hmac.new(secret, s).hexdigest()
 
 
 def make_secure_val(s):
